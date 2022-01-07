@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CodeGenComponent implements OnInit {
 
+  moduleSingleLower: string = '';
+  modulePluralLower: string = '';
+  moduleSingleUpper: string = '';
+  modulePluralUpper: string = '';
+  classSingleLower: string = '';
+  classPluralLower: string = '';
+  classSingleUpper: string = '';
+  classPluralUpper: string = '';
+
   constructor() { }
 
   ngOnInit(): void {
