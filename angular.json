@@ -27,9 +27,14 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/highlight.js/styles/monokai.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/highlight.js/lib/core.js",
+              "./node_modules/highlight.js/lib/common.js",
+              "./node_modules/highlight.js/lib/index.js"
+            ]
           },
           "configurations": {
             "production": {

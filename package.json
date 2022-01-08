@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --disableHostCheck=true",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,7 +18,12 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@ctrl/ngx-codemirror": "^5.1.1",
+    "codemirror": "^5.65.0",
+    "highlight.js": "^11.4.0",
+    "ng-pluralize": "^1.1.0",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-highlightjs": "^6.1.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
