@@ -24,6 +24,7 @@
     "ng-pluralize": "^1.1.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-highlightjs": "^6.1.1",
+    "primeflex": "^3.1.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

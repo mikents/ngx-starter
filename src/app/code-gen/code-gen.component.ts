@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgPluralizeService } from 'ng-pluralize';
-import { first } from 'rxjs';
-import { CodeGenConsts } from './_consts/CodeGenConsts'
+import { DbData } from './_models/db-data.model';
 
 const ucap = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || "";
 const lcap = (s: string) => (s && s[0].toLowerCase() + s.slice(1)) || "";
@@ -14,7 +13,13 @@ const lcap = (s: string) => (s && s[0].toLowerCase() + s.slice(1)) || "";
 
 export class CodeGenComponent implements OnInit {
 
+
   tableDef: any = '';
+  loadTable: any = '';
+  tableFields: DbData[] = [];
+
+  selectedModuleName: string = '';
+  selectedClassName: string = '';
 
   openBase_Controller: string = '';
   getAll_Controller: string = '';
@@ -40,7 +45,8 @@ export class CodeGenComponent implements OnInit {
   incCreate: boolean = false;
   incUpdate: boolean = false;
   incDelete: boolean = false;
-  
+
+  codeControllerCopyText = 'Copy';
 
   constructor(private _plService: NgPluralizeService) { }
 
@@ -50,7 +56,7 @@ export class CodeGenComponent implements OnInit {
     
     setTimeout(() => {
       this.getControllerCode();
-      this.getTableDef();
+      //this.getTableDef();
     }, 1000);
   }
 
@@ -160,101 +166,68 @@ this.code_Controller = this.openBase_Controller +
                        this.closeBase_Controller
   }
 
-getTableDef() {
-  
-//this.tableDef = 
-let tdef = 
-`
-USE WCDATA11
-GO
+  copyControllerText() {
+    navigator.clipboard.writeText(this.code_Controller);
+    this.codeControllerCopyText = 'Copied!';
 
-IF DB_NAME() <> N'WCDATA11' SET NOEXEC ON
-GO
+    setTimeout(() => {
+      this.codeControllerCopyText = 'Copy';
+    }, 1000);
+  }
 
---
--- Create table [dbo].[Phone]
---
-PRINT (N'Create table [dbo].[Phone]')
-GO
-CREATE TABLE dbo.Phone (
-  Id bigint IDENTITY (1002000000, 1),
-  PhoneNumber varchar(50) NULL,
-  Sequence int NULL DEFAULT (0),
-  OrganizationUnitId bigint NULL DEFAULT (1),
-  CreationTime datetime2 NULL DEFAULT (getdate()),
-  CreatorUserId bigint NULL DEFAULT (2),
-  LastModificationTime datetime2 NULL,
-  LastModifierUserId bigint NULL,
-  IsDeleted bit NULL DEFAULT (0),
-  DeleterUserId bigint NULL,
-  DeletionTime datetime2 NULL,
-  x_LegacyId int NULL,
-  x_LegacyType varchar(50) NULL,
-  CONSTRAINT PK_Phone_Id PRIMARY KEY CLUSTERED (Id)
-)
-ON [PRIMARY]
-GO
-`;
+  getTableDef() {
+    if (this.loadTable) {
+      let tableName = '';
 
-let start = tdef.indexOf('CREATE');
-let end = tdef.lastIndexOf(')');
+      let tdef = this.loadTable;
+      
+      tableName = tdef.slice(tdef.indexOf('CREATE TABLE ') + 13, tdef.indexOf('(',tdef.indexOf('CREATE TABLE ')));
+      tableName = tableName.slice(tableName.indexOf('.')+1,tableName.length);
 
-tdef = tdef.slice(start,end);
+      this.selectedClassName = tableName.trim();
 
-let s1 = tdef.indexOf('(')+2;
-let e1 = tdef.lastIndexOf('CONSTRAINT');
-tdef = tdef.slice(s1,e1);
+      let start = tdef.indexOf('CREATE');
+      let end = tdef.lastIndexOf(')');
 
-//let rowcount = tdef.match('\n');
-let rowcount = (tdef.match(/\n/g) || []).length;
-//console.log(rowcount);
+      tdef = tdef.slice(start, end);
+      
+      let s1 = tdef.indexOf('(') + 2;
+      let e1 = tdef.lastIndexOf(',');
+      tdef = tdef.slice(s1, e1+2);
+      
+      let rowcount = (tdef.match(/\n/g) || []).length;
 
-let rowstart = 0;
-let rowend = 0;
-let ary = Array();
-let rowstring;
-let firstspace;
-let secondspace;
-let fieldname;
-let datatype;
+      let rowstart = 0;
+      let rowend = 0;
+      let rowstring;
+      let firstspace;
+      let secondspace;
+      let fieldname;
+      let datatype;
+      let arr = new Array();
+      let parsedTable = 'FieldName'.padEnd(30, " ") + '' + 'DataType \n';
 
-let arr = new Array();
-let obj = new Object();
+      for (let index = 0; index < rowcount; index++) {
+        rowstart = index === 0 ? rowstart : rowend + 1;
+        rowend = tdef.indexOf('\n', rowstart);
 
+        rowstring = tdef.slice(rowstart, rowend).trim().replace(',', '');
 
-//obj["01"] = arr.fieldName;
-//obj["02"] = nieto.value;
-//nietos.push(obj);
+        firstspace = rowstring.indexOf(' ');
+        secondspace = rowstring.indexOf(' ', firstspace + 1);
 
-for (let index = 0; index < rowcount; index++) {
-  rowstart = index === 0? rowstart: rowend + 1;
-  rowend = tdef.indexOf('\n',rowstart);
-  //tdef = tdef.slice(rowstart,rowend);
-  console.log(rowstart);
-  console.log(rowend);
-  rowstring = tdef.slice(rowstart,rowend).trim().replace(',','');
-  firstspace = rowstring.indexOf(' ');
-  secondspace = rowstring.indexOf(' ', firstspace+1);
-  rowstring = rowstring.slice(0,secondspace);
-  firstspace = rowstring.indexOf(' ');
-  
-  obj[index] = rowstring.slice(0,firstspace)
+        fieldname = rowstring.slice(0, firstspace);
+        datatype = rowstring.slice(firstspace + 1, secondspace);
 
-  fieldname = "'fieldName': '" + rowstring.slice(0,firstspace) + "',";
-  datatype = "'dataType': '" + rowstring.slice(firstspace,rowstring.length) + "'";
-  ary.push(rowstring);
-  //console.log(index);
-  
-}
-console.log(ary);
-//console.log(crlfcount);
-//let e2 = tdef.indexOf('\n');
-//tdef = tdef.slice(0,e2);
+        parsedTable = parsedTable + fieldname.padEnd(30, ".") + '' + datatype + ' \n';
 
-this.tableDef = tdef;
+        arr.push({ fieldName: fieldname, dataType: datatype });
+      }
+      this.tableFields = arr;
+      this.tableDef = parsedTable; //tdef;
+      console.log(this.tableFields);
+      this.onClassNameChange(this.selectedClassName);
+    }
 
-//console.log(start);
-//console.log(end);
-//console.log(tdef.slice(start,end));
 }
 }
