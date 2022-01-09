@@ -1,128 +1,104 @@
 <div style="margin:50px;">
 
-    <div class="grid">
+    <div class="grid"> 
         <div class="col-12">
             <div class="grid">
                 <div class="col-2">
-                    <label for="ModuleName">Module</label>
+                    <label for="ModuleName" class="mb-2"><kbd>Module</kbd></label>
                     <input type="text" class="form-control" #moduleName id="ModuleName" [(ngModel)]="selectedModuleName" (keyup)="onModuleNameChange(moduleName.value)">        
                 </div>
                 <div class="col-2">
-                    <label for="ClassName">Class</label>
+                    <label for="ClassName" class="mb-2"><kbd>Class</kbd></label>
                     <input type="text" class="form-control" #className id="ClassName" [(ngModel)]="selectedClassName" (keyup)="onClassNameChange(className.value)">
                 </div>
-
-                <div class="col-1">
-                    <span>
-                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetAll" [(ngModel)]="incGetAll" (change)="getControllerCode()">
-                        <label class="form-check-label" for="IncGetAll">GetAll </label>
-                    </span> 
+                <div class="col-8">
+                    <label class="mb-2"><kbd>Include Endpoints</kbd></label>
+                    <div class="grid mt-1">
+                        <div class="col-12">
+                            <span class="mr-3"> 
+                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetAll" [(ngModel)]="incGetAll" (change)="getControllerCode()">
+                                <label class="form-check-label" for="IncGetAll">GetAll </label>
+                            </span> 
+                            <span class="mr-3">
+                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetById" [(ngModel)]="incGetById" (change)="getControllerCode()">
+                                <label class="form-check-label" for="IncGetById">Get By Id </label>
+                            </span>
+                            <span class="mr-3">
+                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncCreate" [(ngModel)]="incCreate" (change)="getControllerCode()">
+                                <label class="form-check-label" for="IncCreate">Create </label>
+                            </span>
+                            <span class="mr-3">
+                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncUpdate" [(ngModel)]="incUpdate" (change)="getControllerCode()">
+                                <label class="form-check-label" for="IncUpdate">Update </label>
+                            </span>
+                            <span class="mr-3">
+                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncDelete" [(ngModel)]="incDelete" (change)="getControllerCode()">
+                                <label class="form-check-label" for="IncDelete">Delete </label>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-1">
-                    <span>
-                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetById" [(ngModel)]="incGetById" (change)="getControllerCode()">
-                        <label class="form-check-label" for="IncGetById">Get By Id </label>
-                    </span>
-                </div>
-                <div class="col-1">
-                    <span>
-                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncCreate" [(ngModel)]="incCreate" (change)="getControllerCode()">
-                        <label class="form-check-label" for="IncCreate">Create </label>
-                    </span>
-                </div>
-
-                <div class="col-1">
-                    <span>
-                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncUpdate" [(ngModel)]="incUpdate" (change)="getControllerCode()">
-                        <label class="form-check-label" for="IncUpdate">Update </label>
-                    </span>
-                </div>
-                <div class="col-1">
-                    <span>
-                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncDelete" [(ngModel)]="incDelete" (change)="getControllerCode()">
-                        <label class="form-check-label" for="IncDelete">Delete </label>
-                    </span>
-                </div>
-
             </div>
         </div>
-
-        <div class="col-3">
-            <div>
-                <textarea name="tableDef" id="tableDef" class="form-control" [(ngModel)]="loadTable" cols="50" rows="10"></textarea>
-                <button class="btn btn-primary btn-sm mt-2" (click)="getTableDef()">Load Definition</button>
-            </div>
-        </div>
-        <div class="col-4">
-            <div>
-                <pre style="margin-top:-42px;">
-                    <!-- <code [highlight]="code"></code> -->
-                    <ngx-codemirror
-                        [(ngModel)]="tableDef"
-                        [options]="{
-                            
-                            lineNumbers: true,
-                            theme: 'cobalt',
-                            mode: 'javascript'
-                        }"
-                        ></ngx-codemirror>
-                  </pre>
-            </div>
-        </div>
-        
-        <div class="col-2">
+        <div class="col-12">
             <div class="grid">
-                <div class="col-12">
-                    <h6>Include Endpoints</h6>
+                <div class="col-4">
+                    <div class="grid">
+                        <div class="col-12">
+                            <label for="tableDef" class="mb-2"><kbd>SQL Definition (Paste Create Statement)</kbd></label>
+                            <textarea name="tableDef" id="tableDef" class="form-control" [(ngModel)]="loadTable" cols="50" rows="10"></textarea>
+                            <button class="btn btn-primary btn-sm mt-2" (click)="getTableDef()">Load Definition</button>
+                        </div>
+                        <div class="col-12 mt-5">
+                            <div>
+                                <pre style="margin-top:-42px;">
+                                            <ngx-codemirror
+                                                [(ngModel)]="tableDef"
+                                                [options]="{
+                                                    
+                                                    lineNumbers: true,
+                                                    theme: 'cobalt',
+                                                    mode: 'javascript'
+                                                }"
+                                                ></ngx-codemirror>
+                                            </pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12"><hr></div>
-
-                
-            </div>
-        </div>
-        </div>
-
-
-    <div class="col-12">
-
-        
-
-        
-        <div class="col-10" style="border:1px solid silver;padding:5px;">
-            <div class="row">
-                <div class="col-3">
-                    <div class="col-12">Module Single Lower: {{moduleSingleLower }}</div> 
-                    <div class="col-12">Module Plural Lower: {{modulePluralLower }}</div>
-                    <div class="col-12">Module Single Upper: {{moduleSingleUpper }}</div>
-                    <div class="col-12">Module Plural Upper: {{modulePluralUpper}}</div>
-                    <div class="col-12">Class Single Lower: {{classSingleLower }}</div>
-                    <div class="col-12">Class Plural Lower: {{classPluralLower }}</div>
-                    <div class="col-12">Class Single Upper: {{classSingleUpper}}</div>
-                    <div class="col-12">Class Plural Upper: {{classPluralUpper}}</div>
-                    <div class="col-12"><hr></div>
-                    <div class="col-12"></div>
-                    <div class="col-12"></div>
-                    <div class="col-12"></div>
-                    <div class="col-12"></div>
-                    <div class="col-12"></div>
-                    <div class="col-12"></div>
-                </div>
-                <div class="col-9">
-                    <button class="btn btn-default btn-sm" style="float:right;" (click)="copyControllerText()">{{codeControllerCopyText}}</button>
-                    <pre>
-                        <!-- <code [highlight]="code"></code> -->
-                        <ngx-codemirror
-                            [(ngModel)]="code_Controller"
-                            [options]="{
-                                
-                                lineNumbers: true,
-                                theme: 'cobalt',
-                                mode: 'javascript'
-                            }"
-                            ></ngx-codemirror>
-                      </pre>
+                <div class="col-8">
+                    <div class="grid">
+                        <div class="col-9">
+                            <button class="btn btn-default btn-sm" style="float:right;" (click)="copyControllerText()">{{codeControllerCopyText}}</button>
+                                <pre>
+                                    <ngx-codemirror
+                                        [(ngModel)]="code_Controller"
+                                        [options]="{
+                                            
+                                            lineNumbers: true,
+                                            theme: 'cobalt',
+                                            mode: 'javascript'
+                                        }"
+                                        ></ngx-codemirror>
+                                  </pre>
+                        </div>
+                        <div class="col-3">
+                            <div class="grid">
+                                <div class="col-12"><label class="mb-2"><kbd>Variables</kbd></label></div> 
+                                <div class="col-12">Module Single Lower: {{moduleSingleLower }}</div> 
+                                <div class="col-12">Module Plural Lower: {{modulePluralLower }}</div>
+                                <div class="col-12">Module Single Upper: {{moduleSingleUpper }}</div>
+                                <div class="col-12">Module Plural Upper: {{modulePluralUpper}}</div>
+                                <div class="col-12">Class Single Lower: {{classSingleLower }}</div>
+                                <div class="col-12">Class Plural Lower: {{classPluralLower }}</div>
+                                <div class="col-12">Class Single Upper: {{classSingleUpper}}</div>
+                                <div class="col-12">Class Plural Upper: {{classPluralUpper}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
