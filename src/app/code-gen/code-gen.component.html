@@ -1,54 +1,63 @@
 <div style="margin:50px;">
 
-    <div class="grid"> 
+    <div class="grid">
+        {{selectedTab}}
         <div class="col-12">
             <div class="grid">
-                <div class="col-2">
-                    <label for="ModuleName" class="mb-2"><kbd>Module</kbd></label>
-                    <input type="text" class="form-control" #moduleName id="ModuleName" [(ngModel)]="selectedModuleName" (keyup)="onModuleNameChange(moduleName.value)">        
-                </div>
-                <div class="col-2">
-                    <label for="ClassName" class="mb-2"><kbd>Class</kbd></label>
-                    <input type="text" class="form-control" #className id="ClassName" [(ngModel)]="selectedClassName" (keyup)="onClassNameChange(className.value)">
-                </div>
-                <div class="col-8">
-                    <label class="mb-2"><kbd>Include Endpoints</kbd></label>
-                    <div class="grid mt-1">
-                        <div class="col-12">
-                            <span class="mr-3"> 
-                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetAll" [(ngModel)]="incGetAll" (change)="getControllerCode()">
-                                <label class="form-check-label" for="IncGetAll">GetAll </label>
-                            </span> 
-                            <span class="mr-3">
-                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncGetById" [(ngModel)]="incGetById" (change)="getControllerCode()">
-                                <label class="form-check-label" for="IncGetById">Get By Id </label>
-                            </span>
-                            <span class="mr-3">
-                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncCreate" [(ngModel)]="incCreate" (change)="getControllerCode()">
-                                <label class="form-check-label" for="IncCreate">Create </label>
-                            </span>
-                            <span class="mr-3">
-                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncUpdate" [(ngModel)]="incUpdate" (change)="getControllerCode()">
-                                <label class="form-check-label" for="IncUpdate">Update </label>
-                            </span>
-                            <span class="mr-3">
-                                <input type="checkbox" style="margin-right: 10px;" class="form-check-input" id="IncDelete" [(ngModel)]="incDelete" (change)="getControllerCode()">
-                                <label class="form-check-label" for="IncDelete">Delete </label>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="grid">
-                <div class="col-4">
+                <div class="col-4" style="border:1px solid lightgray;">
                     <div class="grid">
+
                         <div class="col-12">
-                            <label for="tableDef" class="mb-2"><kbd>SQL Definition (Paste Create Statement)</kbd></label>
-                            <textarea name="tableDef" id="tableDef" class="form-control" [(ngModel)]="loadTable" cols="50" rows="10"></textarea>
+                            <label for="tableDef" class="mb-2"><kbd>SQL Definition (Paste Create
+                                    Statement)</kbd></label>
+                            <textarea name="tableDef" id="tableDef" class="form-control" [(ngModel)]="loadTable"
+                                cols="50" rows="10"></textarea>
                             <button class="btn btn-primary btn-sm mt-2" (click)="getTableDef()">Load Definition</button>
                         </div>
+
+                        <div class="col-6">
+                            <label for="ModuleName" class="mb-2"><kbd>Module</kbd></label>
+                            <input type="text" class="form-control" #moduleName id="ModuleName"
+                                [(ngModel)]="selectedModuleName" (keyup)="onModuleNameChange(moduleName.value)">
+                        </div>
+                        <div class="col-6">
+                            <label for="ClassName" class="mb-2"><kbd>Class</kbd></label>
+                            <input type="text" class="form-control" #className id="ClassName"
+                                [(ngModel)]="selectedClassName" (keyup)="onClassNameChange(className.value)">
+                        </div>
+                        <div class="col-12">
+                            <label class="mb-2"><kbd>Include Endpoints</kbd></label>
+                            <div class="grid mt-1">
+                                <div class="col-12">
+                                    <span class="mr-3">
+                                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input"
+                                            id="IncGetAll" [(ngModel)]="incGetAll" (change)="getAllCode()">
+                                        <label class="form-check-label" for="IncGetAll">GetAll </label>
+                                    </span>
+                                    <span class="mr-3">
+                                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input"
+                                            id="IncGetById" [(ngModel)]="incGetById" (change)="getAllCode()">
+                                        <label class="form-check-label" for="IncGetById">Get By Id </label>
+                                    </span>
+                                    <span class="mr-3">
+                                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input"
+                                            id="IncCreate" [(ngModel)]="incCreate" (change)="getAllCode()">
+                                        <label class="form-check-label" for="IncCreate">Create </label>
+                                    </span>
+                                    <span class="mr-3">
+                                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input"
+                                            id="IncUpdate" [(ngModel)]="incUpdate" (change)="getAllCode()">
+                                        <label class="form-check-label" for="IncUpdate">Update </label>
+                                    </span>
+                                    <span class="mr-3">
+                                        <input type="checkbox" style="margin-right: 10px;" class="form-check-input"
+                                            id="IncDelete" [(ngModel)]="incDelete" (change)="getAllCode()">
+                                        <label class="form-check-label" for="IncDelete">Delete </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-12 mt-5">
                             <div>
                                 <pre style="margin-top:-42px;">
@@ -68,24 +77,150 @@
                 </div>
                 <div class="col-8">
                     <div class="grid">
-                        <div class="col-9">
-                            <button class="btn btn-default btn-sm" style="float:right;" (click)="copyControllerText()">{{codeControllerCopyText}}</button>
-                                <pre>
-                                    <ngx-codemirror
-                                        [(ngModel)]="code_Controller"
-                                        [options]="{
-                                            
-                                            lineNumbers: true,
-                                            theme: 'cobalt',
-                                            mode: 'javascript'
-                                        }"
-                                        ></ngx-codemirror>
-                                  </pre>
+                        <div class="col-11" style="margin-top: -8px;">
+
+
+                            <tabset>
+                                <tab heading="Controller" id="tab1" (selectTab)="selectTab(1)">
+                                    <div  *ngIf="selectedTab===1" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                                <ngx-codemirror
+                                                    [(ngModel)]="code_Controller"
+                                                    [options]="{
+                                                        
+                                                        lineNumbers: true,
+                                                        theme: 'cobalt',
+                                                        mode: 'javascript'
+                                                    }">
+                                                </ngx-codemirror>
+                                            </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('controller')">{{codeControllerCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="DTO" id="tab2" (selectTab)="selectTab(2)">
+                                    <div  *ngIf="selectedTab===2" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                                <ngx-codemirror
+                                                    [(ngModel)]="code_Dto"
+                                                    [options]="{
+                                                        
+                                                        lineNumbers: true,
+                                                        theme: 'cobalt',
+                                                        mode: 'javascript'
+                                                    }">
+                                                </ngx-codemirror>
+                                            </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('dto')">{{codeDtoCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Command Text" id="tab3" (selectTab)="selectTab(3)">
+                                    <div  *ngIf="selectedTab===3" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                        <ngx-codemirror
+                                            [(ngModel)]="code_CommandText"
+                                            [options]="{
+                                                
+                                                lineNumbers: true,
+                                                theme: 'cobalt',
+                                                mode: 'javascript'
+                                            }">
+                                        </ngx-codemirror>
+                                    </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('commandText')">{{codeCommandTextCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Command Text Interface" id="tab4" (selectTab)="selectTab(4)">
+                                    <div  *ngIf="selectedTab===4" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                        <ngx-codemirror
+                                            [(ngModel)]="code_CommandTextInterface"
+                                            [options]="{
+                                                
+                                                lineNumbers: true,
+                                                theme: 'cobalt',
+                                                mode: 'javascript'
+                                            }">
+                                        </ngx-codemirror>
+                                    </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('commandTextInterface')">{{codeCommandTextInterfaceCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Repository" id="tab5" (selectTab)="selectTab(5)">
+                                    <div  *ngIf="selectedTab===5" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                        <ngx-codemirror
+                                            [(ngModel)]="code_Repository"
+                                            [options]="{
+                                                
+                                                lineNumbers: true,
+                                                theme: 'cobalt',
+                                                mode: 'javascript'
+                                            }">
+                                        </ngx-codemirror>
+                                    </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('repository')">{{codeRepositoryCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Repository Interface" id="tab6" (selectTab)="selectTab(6)">
+                                    <div  *ngIf="selectedTab===6" class="grid">
+                                        <div class="col-11">
+                                            <pre>
+                                        <ngx-codemirror
+                                            [(ngModel)]="code_RepositoryInterface"
+                                            [options]="{
+                                                
+                                                lineNumbers: true,
+                                                theme: 'cobalt',
+                                                mode: 'javascript'
+                                            }">
+                                        </ngx-codemirror>
+                                    </pre>
+                                        </div>
+                                        <div class="col-1" style="margin-top:21px;">
+                                            <button class="btn btn-warning btn-sm" style="float:left;"
+                                                (click)="copyText('repositoryInterface')">{{codeRepositoryInterfaceCopyText}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+
+
                         </div>
-                        <div class="col-3">
-                            <div class="grid">
-                                <div class="col-12"><label class="mb-2"><kbd>Variables</kbd></label></div> 
-                                <div class="col-12">Module Single Lower: {{moduleSingleLower }}</div> 
+                        <div class="col-1">
+                            <div class="grid" style="display:none;">
+                                <div class="col-12"><label class="mb-2"><kbd>Variables</kbd></label></div>
+                                <div class="col-12">Module Single Lower: {{moduleSingleLower }}</div>
                                 <div class="col-12">Module Plural Lower: {{modulePluralLower }}</div>
                                 <div class="col-12">Module Single Upper: {{moduleSingleUpper }}</div>
                                 <div class="col-12">Module Plural Upper: {{modulePluralUpper}}</div>
@@ -100,5 +235,3 @@
             </div>
         </div>
     </div>
-
-

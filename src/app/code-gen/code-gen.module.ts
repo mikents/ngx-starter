@@ -6,6 +6,7 @@ import { CodeGenRoutingModule } from './code-gen-routing.module';
 import { CodeGenComponent } from './code-gen.component';
 //import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { TabsModule, TabsetConfig } from 'ngx-bootstrap/tabs';
 import { FormsModule } from '@angular/forms';
 
 
@@ -17,10 +18,12 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     CodeGenRoutingModule,
     FormsModule,
-    CodemirrorModule
+    CodemirrorModule,
+    TabsModule
     //HighlightModule
   ],
   providers: [
+    TabsetConfig
     // {
     //   provide: HIGHLIGHT_OPTIONS,
     //   useValue: {
